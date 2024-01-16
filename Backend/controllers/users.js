@@ -34,6 +34,10 @@ async function putUser(id, user){
     return data.putUser(id, user);
 }
 
+async function addFavorite(idPlan){
+    return data.addFavorite(idPlan);
+}
+
 async function findByCredential(email, password){
     return data.findByCredential(email, password);
 }
@@ -42,4 +46,4 @@ async function generatedToken(user){
     return data.generatedToken(user);
 }
 
-module.exports = {getUsers, getUser, addUser, deleteUser, putUser, findByCredential, generatedToken};
+module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, findByCredential, generatedToken};
