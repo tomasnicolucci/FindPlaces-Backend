@@ -52,6 +52,15 @@ async function putUser(id, user){
     return result;                    
 }
 
+async function addFavorite(idPlan){
+    const connection = await conn.getConnection();
+    const result = await connection
+                        .db(DATABASE)
+                        .collection(USERS)
+                        .updateOne();
+    return result;
+}
+
 async function findByCredential(email, password){
     const connection = await conn.getConnection();
     const user = await connection
