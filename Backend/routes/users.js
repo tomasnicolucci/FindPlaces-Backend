@@ -30,7 +30,7 @@ router.put('/:id', async(req,res) => {
 router.post('/login', async(req,res) => {
     try{
         const user = await controller.findByCredential(req.body.email, req.body.password);
-        const token = controller.generatedToken(user);
+        const token = await controller.generatedToken(user);
         res.send({user, token});
     } catch(error) {
         res.status(401).send(error.message);
