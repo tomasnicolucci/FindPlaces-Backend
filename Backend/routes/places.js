@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/places');
 const {validatePlace} = require('../middlewares/placesValidation');
+const auth = require('../middlewares/auth');
 
 router.get('/', async (req, res) => {
     res.json(await controller.getPlaces());

@@ -14,6 +14,7 @@ async function addUser(req, res){
         let userData= req.body;
         let password = await bcrypt.hash(userData.password,10);
         userData.password = password;
+        userData.favorites = [];
         data.addUser(userData);
         res.status(201).json({message: 'Creado'});
     }catch{
