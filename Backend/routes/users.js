@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/users');
 const {validateCreate} = require('../middlewares/usersValidation');
+const auth = require('../middlewares/auth');
 
 router.get('/', async(req,res) => {
     res.json(await controller.getUsers());
@@ -37,7 +38,7 @@ router.post('/login', async(req,res) => {
     }
 })
 
-router.post('/addFavorite', async(req, res) => {
+router.post('/addFavorite', auth, async(req, res) => {
     res.json(await controller.addFavorite(req.body.idPlan));
 })
 
