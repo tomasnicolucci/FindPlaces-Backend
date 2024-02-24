@@ -4,7 +4,7 @@ const controller = require('../controllers/places');
 const {validatePlace} = require('../middlewares/placesValidation');
 const auth = require('../middlewares/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     res.json(await controller.getPlaces());
 })
 

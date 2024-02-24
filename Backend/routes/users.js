@@ -39,7 +39,7 @@ router.post('/login', async(req,res) => {
 })
 
 router.post('/addFavorite', auth, async(req, res) => {
-    res.json(await controller.addFavorite(req.body.idPlan));
+    res.json(await controller.addFavorite(req.body.idPlace, req.body.userToken));
 })
 
 module.exports = router;
