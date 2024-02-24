@@ -1,5 +1,6 @@
 const data = require('../data/users');
 const bcrypt = require('bcrypt');
+const {getTokenData} = require('../middlewares/auth');
 
 async function getUsers(){
     return data.getUsers();
@@ -35,8 +36,10 @@ async function putUser(id, user){
     return data.putUser(id, user);
 }
 
-async function addFavorite(idPlan){
-    return data.addFavorite(idPlan);
+async function addFavorite(idPlace, userToken){
+    const tokenData = getTokenData(userToken);
+    console.log(tokenData);
+    return data.addFavorite(idPlace);
 }
 
 async function findByCredential(email, password){
