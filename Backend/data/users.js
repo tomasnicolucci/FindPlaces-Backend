@@ -52,12 +52,12 @@ async function putUser(id, user){
     return result;                    
 }
 
-async function addFavorite(idPlan){
+async function addFavorite(userId, newFavorites){
     const connection = await conn.getConnection();
     const result = await connection
                         .db(DATABASE)
                         .collection(USERS)
-                        .updateOne();
+                        .updateOne({_id: new ObjectId(userId)}, {$set: {favorites: newFavorites}});
     return result;
 }
 
@@ -84,4 +84,4 @@ async function generatedToken(user){
     return token;
 }
 
-module.exports = {getUsers, getUser, addUser, deleteUser, putUser, findByCredential, generatedToken};
+module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, findByCredential, generatedToken};

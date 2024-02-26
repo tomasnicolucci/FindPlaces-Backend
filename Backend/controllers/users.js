@@ -1,6 +1,6 @@
 const data = require('../data/users');
 const bcrypt = require('bcrypt');
-const {getTokenData} = require('../middlewares/auth');
+const jwt = require('jsonwebtoken');
 
 async function getUsers(){
     return data.getUsers();
@@ -36,10 +36,14 @@ async function putUser(id, user){
     return data.putUser(id, user);
 }
 
-async function addFavorite(idPlace, userToken){
-    const tokenData = getTokenData(userToken);
-    console.log(tokenData);
-    return data.addFavorite(idPlace);
+async function addFavorite(idPlace, token){
+    const userToken = token.split(' ').pop();
+    const tokenData = jwt.verify(userToken, process.env.CLAVE_TOKEN);
+    const userId = tokenData._id;
+    const user = await getUser(userId);
+    let favorites = user.favorites;
+    favorites.push(idPlace);
+    data.addFavorite(userId, favorites);
 }
 
 async function findByCredential(email, password){
