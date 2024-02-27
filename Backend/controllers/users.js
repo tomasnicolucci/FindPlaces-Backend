@@ -16,6 +16,7 @@ async function addUser(req, res){
         let password = await bcrypt.hash(userData.password,10);
         userData.password = password;
         userData.favorites = [];
+        userData.visited= [];
         data.addUser(userData);
         res.status(201).json({message: 'Creado'});
     }catch{
@@ -46,6 +47,16 @@ async function addFavorite(idPlace, token){
     data.addFavorite(userId, favorites);
 }
 
+async function addVisited(idPlace, token){
+    const userToken = token.split(' ').pop();
+    const tokenData = jwt.verify(userToken, process.env.CLAVE_TOKEN);
+    const userId = tokenData._id;
+    const user = await getUser(userId);
+    let visited = user.visited;
+    visited.push(idPlace);
+    data.addVisited(userId, visited);
+}
+
 async function findByCredential(email, password){
     return data.findByCredential(email, password);
 }
@@ -54,4 +65,4 @@ async function generatedToken(user){
     return data.generatedToken(user);
 }
 
-module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, findByCredential, generatedToken};
+module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, addVisited, findByCredential, generatedToken};
