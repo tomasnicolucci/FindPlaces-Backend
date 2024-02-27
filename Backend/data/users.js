@@ -61,6 +61,15 @@ async function addFavorite(userId, newFavorites){
     return result;
 }
 
+async function addVisited(userId, newVisited){
+    const connection = await conn.getConnection();
+    const result = await connection
+                        .db(DATABASE)
+                        .collection(USERS)
+                        .updateOne({_id: new ObjectId(userId)}, {$set: {visited: newVisited}});
+    return result;
+}
+
 async function findByCredential(email, password){
     const connection = await conn.getConnection();
     const user = await connection
@@ -84,4 +93,4 @@ async function generatedToken(user){
     return token;
 }
 
-module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, findByCredential, generatedToken};
+module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, addVisited, findByCredential, generatedToken};

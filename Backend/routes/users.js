@@ -42,4 +42,8 @@ router.post('/addFavorite', auth, async(req, res) => {
     res.json(await controller.addFavorite(req.body.idPlace, req.headers.authorization));
 })
 
+router.post('/addVisited', auth, async(req, res) => {
+    res.json(await controller.addVisited(req.body.idPlace, req.headers.authorization));
+})
+
 module.exports = router;
