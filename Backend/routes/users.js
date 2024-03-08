@@ -32,18 +32,18 @@ router.post('/login', async(req,res) => {
     try{
         const user = await controller.findByCredential(req.body.email, req.body.password);
         const token = await controller.generatedToken(user);
-        res.send({user, token});
+        res.json({user, token});
     } catch(error) {
-        res.status(401).send(error.message);
+        res.status(400).send(error.message);
     }
 })
 
-router.post('/addFavorite', auth, async(req, res) => {
-    res.json(await controller.addFavorite(req.body.idPlace, req.headers.authorization));
+router.post('/addFavorite/:id', auth, async(req, res) => {
+    res.json(await controller.addFavorite(req.params.id, req.headers.authorization));
 })
 
-router.post('/addVisited', auth, async(req, res) => {
-    res.json(await controller.addVisited(req.body.idPlace, req.headers.authorization));
+router.post('/addVisited/:id', auth, async(req, res) => {
+    res.json(await controller.addVisited(req.params.id, req.headers.authorization));
 })
 
 module.exports = router;
