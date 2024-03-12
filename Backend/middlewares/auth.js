@@ -8,6 +8,7 @@ async function auth(req, res, next){
         //console.log(userToken);
         next();
     } catch (error){
+        console.log(error);
         res.status(401).send({err1: error.message});
     }
 }
