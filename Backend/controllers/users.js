@@ -38,9 +38,7 @@ async function putUser(id, user){
 }
 
 async function addFavorite(idPlace, token){
-    const userToken = token.split(' ').pop();
-    const tokenData = jwt.verify(userToken, process.env.CLAVE_TOKEN);
-    const userId = tokenData._id;
+    const userId = await verifyToken(token);
     const user = await getUser(userId);
     let favorites = user.favorites;
     favorites.push(idPlace);
@@ -48,13 +46,30 @@ async function addFavorite(idPlace, token){
 }
 
 async function addVisited(idPlace, token){
-    const userToken = token.split(' ').pop();
-    const tokenData = jwt.verify(userToken, process.env.CLAVE_TOKEN);
-    const userId = tokenData._id;
+    const userId = await verifyToken(token);
     const user = await getUser(userId);
     let visited = user.visited;
     visited.push(idPlace);
     data.addVisited(userId, visited);
+}
+
+async function getFavorites(token){
+    const userId = await verifyToken(token);
+    const user = await getUser(userId);
+    return user.favorites;
+}
+
+async function getVisited(token){
+    const userId = await verifyToken(token);
+    const user = await getUser(userId);
+    return user.visited;
+}
+
+// Verify token and returns User ID
+async function verifyToken(tkn){
+    const userToken = tkn.split(' ').pop();
+    const tokenData = jwt.verify(userToken, process.env.CLAVE_TOKEN);
+    return tokenData._id; // user._id
 }
 
 async function findByCredential(email, password){
@@ -65,4 +80,4 @@ async function generatedToken(user){
     return data.generatedToken(user);
 }
 
-module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, addVisited, findByCredential, generatedToken};
+module.exports = {getUsers, getUser, addUser, deleteUser, putUser, addFavorite, addVisited, getFavorites, getVisited, findByCredential, generatedToken};

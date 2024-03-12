@@ -38,12 +38,20 @@ router.post('/login', async(req,res) => {
     }
 })
 
-router.post('/addFavorite/:id', auth, async(req, res) => {
+router.post('/favs/add/:id', auth, async(req, res) => {
     res.json(await controller.addFavorite(req.params.id, req.headers.authorization));
 })
 
 router.post('/addVisited/:id', auth, async(req, res) => {
     res.json(await controller.addVisited(req.params.id, req.headers.authorization));
+})
+
+router.get('/favs/all', auth, async(req,res) => {
+    res.json(await controller.getFavorites(req.headers.authorization));
+})
+
+router.get('/visited/all', auth, async(req,res) => {
+    res.json(await controller.getVisited(req.headers.authorization));
 })
 
 module.exports = router;
