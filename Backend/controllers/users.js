@@ -1,7 +1,7 @@
 const data = require('../data/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const {getPlace} = require('../controllers/places')
 async function getUsers(){
     return data.getUsers();
 }
@@ -56,7 +56,12 @@ async function addVisited(idPlace, token){
 async function getFavorites(token){
     const userId = await verifyToken(token);
     const user = await getUser(userId);
-    return user.favorites;
+    const favsId = user.favorites;
+    const favs = await Promise.all(favsId.map(async (e) => {
+        return await getPlace(e);
+    }));
+    //console.log(favs);
+    return favs;
 }
 
 async function getVisited(token){
