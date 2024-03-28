@@ -67,7 +67,11 @@ async function getFavorites(token){
 async function getVisited(token){
     const userId = await verifyToken(token);
     const user = await getUser(userId);
-    return user.visited;
+    const vstdId = user.visited;
+    const vstd = await Promise.all(vstdId.map(async (e) => {
+        return await getPlace(e);
+    })); 
+    return vstd;
 }
 
 // Verify token and returns User ID
