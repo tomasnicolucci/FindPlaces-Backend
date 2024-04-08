@@ -6,7 +6,7 @@ const validatePlace = [
         .exists()
         .notEmpty(),
     body('description', 'Ingrese una descripción')
-        .exists(),
+        .notEmpty(),
     (req, res, next) => {
         validateResult(req,res,next);
     }
