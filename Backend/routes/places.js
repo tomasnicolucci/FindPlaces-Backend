@@ -24,7 +24,7 @@ router.delete('/:id', async(req,res) => {
     res.json(await controller.deletePlace(req.params.id));
 })
 
-router.put('/:id', async(req,res) => {
+router.put('/:id', validatePlace, async(req,res) => {
     res.json(await controller.putPlace(req.params.id, req.body));
 })
 
