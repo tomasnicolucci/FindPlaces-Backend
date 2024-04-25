@@ -48,7 +48,7 @@ async function putUser(id, user){
     const result = await connection
                         .db(DATABASE)
                         .collection(USERS)
-                        .updateOne({_id: new ObjectId(id)}, {$set: {}});
+                        .updateOne({_id: new ObjectId(id)}, {$set: user});
     return result;                    
 }
 

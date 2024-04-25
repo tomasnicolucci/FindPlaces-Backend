@@ -46,7 +46,7 @@ async function putPlace(id, place){
     const result = await connection
                         .db(DATABASE)
                         .collection(PLACES)
-                        .updateOne({_id: new ObjectId(id)}, {$set: {}});
+                        .updateOne({_id: new ObjectId(id)}, {$set: place});
     return result;                    
 }
 
