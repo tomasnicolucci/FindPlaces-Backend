@@ -2,6 +2,7 @@ const data = require('../data/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {getPlace} = require('../controllers/places')
+
 async function getUsers(){
     return data.getUsers();
 }
@@ -34,6 +35,8 @@ async function deleteUser(id){
 }
 
 async function putUser(id, user){
+    let password = await bcrypt.hash(user.password,10);
+    user.password = password;
     return data.putUser(id, user);
 }
 

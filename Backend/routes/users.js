@@ -42,7 +42,7 @@ router.post('/favs/add/:id', auth, async(req, res) => {
     res.json(await controller.addFavorite(req.params.id, req.headers.authorization));
 })
 
-router.post('/visited/all/:id', auth, async(req, res) => {
+router.post('/visited/add/:id', auth, async(req, res) => {
     res.json(await controller.addVisited(req.params.id, req.headers.authorization));
 })
 
